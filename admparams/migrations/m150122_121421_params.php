@@ -15,7 +15,7 @@ class m150122_121421_params extends Migration
         $this->createTable('{{%adm_params}}', [
             'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING . "(250)",
-            'text' => Schema::TYPE_TEXT,
+            'value' => Schema::TYPE_TEXT,
             'updated_at' => Schema::TYPE_TIMESTAMP . " NOT NULL",
         ], $tableOptions);
     }
