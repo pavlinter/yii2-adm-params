@@ -1,6 +1,6 @@
 <?php
 
-namespace pavlinter\admparams;
+namespace pavlinter\admparams\models;
 
 use Yii;
 use yii\base\Model;

@@ -1,7 +1,8 @@
 <?php
 
-namespace pavlinter\admparams;
+namespace pavlinter\admparams\controllers;
 
+use pavlinter\admparams\Module;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -39,18 +40,6 @@ class ParamsController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Params model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 

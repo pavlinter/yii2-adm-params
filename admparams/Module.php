@@ -46,9 +46,9 @@ class Module extends \yii\base\Module implements AdmBootstrapInterface
     public function loading($adm)
     {
         if ($adm->user->can('AdmRoot')) {
-            $adm->params['left-menu']['settings'] = [
-                'label' => '<i class="fa fa-file-text"></i><span>' . $adm::t('menu', 'Settings') . '</span>',
-                'url' => ['/admpages/page/index', 'id_parent' => 0]
+            $adm->params['left-menu']['settings']['items'][] = [
+                'label' => '<span>' . $adm::t('menu', 'Params') . '</span>',
+                'url' => ['/admparams/params/index']
             ];
         }
     }
