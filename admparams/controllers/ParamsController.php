@@ -2,6 +2,7 @@
 
 namespace pavlinter\admparams\controllers;
 
+use pavlinter\adm\Adm;
 use pavlinter\admparams\Module;
 use Yii;
 use yii\web\Controller;
@@ -53,7 +54,8 @@ class ParamsController extends Controller
         $model = Module::getInstance()->manager->createParams();
         $model->loadDefaultValues();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
+            return Adm::redirect(['update', 'id' => $model->id]);
         }
         return $this->render('create', [
             'model' => $model,
@@ -70,7 +72,8 @@ class ParamsController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
+            return Adm::redirect(['update', 'id' => $model->id]);
         }
         return $this->render('update', [
             'model' => $model,
@@ -86,8 +89,8 @@ class ParamsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
+        return Adm::redirect(['index']);
     }
 
     /**

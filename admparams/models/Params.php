@@ -3,6 +3,7 @@
 namespace pavlinter\admparams\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%adm_params}}".
@@ -45,7 +46,8 @@ class Params extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'value'], 'required'],
+            [['name'], 'required'],
+            [['name'], 'unique', 'targetAttribute' => 'name'],
             [['value'], 'string'],
             [['name'], 'string', 'max' => 250]
         ];
@@ -71,5 +73,14 @@ class Params extends \yii\db\ActiveRecord
             'value' => Yii::t('modelAdm/adm_params', 'Value'),
             'updated_at' => Yii::t('modelAdm/adm_params', 'Updated At'),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function bootstrap()
+    {
+        $params = self::find()->asArray()->all();
+        return ArrayHelper::map($params, 'name', 'value');
     }
 }

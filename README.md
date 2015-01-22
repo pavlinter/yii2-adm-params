@@ -12,6 +12,10 @@ Yii2: Adm-Params Модуль для Adm CMS
 Настройка
 -------------
 ```php
+'on beforeRequest' => function ($event) {
+    $params = \pavlinter\admparams\models\Params::bootstrap();
+    Yii::$app->params = \yii\helpers\ArrayHelper::merge(Yii::$app->params, $params);
+},
 'modules' => [
     ...
     'adm' => [

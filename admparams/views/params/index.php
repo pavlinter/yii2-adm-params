@@ -1,5 +1,6 @@
 <?php
 
+use pavlinter\admparams\Module;
 use yii\helpers\Html;
 use pavlinter\adm\Adm;
 
@@ -15,7 +16,6 @@ Yii::$app->i18n->resetDot();
 <div class="params-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a(Adm::t('admparams', 'Create Params'), ['create'], ['class' => 'btn btn-primary']) ?>
@@ -26,13 +26,30 @@ Yii::$app->i18n->resetDot();
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'name',
+                'vAlign' => 'middle',
+            ],
+            [
+                'attribute' => 'value',
+                'vAlign' => 'middle',
+            ],
+            [
+                'attribute' => 'description',
+                'vAlign' => 'middle',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Module::t('description', $model->name,['dot' => true]);
+                },
+            ],
 
-            'id',
-            'name',
-            'value:ntext',
-            'updated_at',
-
-            ['class' => '\kartik\grid\ActionColumn'],
+            [
+                'class' => '\kartik\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'options' => [
+                    'style' => 'width:70px;',
+                ],
+            ],
         ],
     ]); ?>
 
