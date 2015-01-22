@@ -14,7 +14,6 @@ use Yii;
  */
 class Params extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */

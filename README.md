@@ -31,5 +31,5 @@ Yii2: Adm-Params Модуль для Adm CMS
 Запустить миграцию
 -------------
 ```php
-
+yii migrate --migrationPath=@vendor/pavlinter/yii2-adm-params/admparams/migrations
 ```
