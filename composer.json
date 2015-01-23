@@ -1,6 +1,6 @@
 {
-    "name": "pavlinter/yii2-adm-pages",
-    "description": "Yii2: Adm-Params",
+    "name": "pavlinter/yii2-adm-params",
+    "description": "Yii2: Adm-Params Модуль для Adm CMS",
     "keywords": ["yii2", "adm", "cms","adm-params", "params"],
     "type": "yii2-extension",
     "license": "BSD 3-Clause",
