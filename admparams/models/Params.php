@@ -80,7 +80,20 @@ class Params extends \yii\db\ActiveRecord
      */
     public static function bootstrap()
     {
-        $params = self::find()->asArray()->all();
-        return ArrayHelper::map($params, 'name', 'value');
+        $key = self::className() . '-params';
+        $params = Yii::$app->cache->get($key);
+        if ($params === false) {
+            $params = ArrayHelper::map(self::find()->asArray()->all(), 'name', 'value');
+            $query = new \yii\db\Query();
+            $sql = $query->select('COUNT(*),MAX(updated_at)')
+                ->from(self::tableName())
+                ->createCommand()
+                ->getRawSql();
+            Yii::$app->cache->set($key, $params, 86400, new \yii\caching\DbDependency([
+                'sql' => $sql,
+            ]));
+
+        }
+        return $params;
     }
 }
