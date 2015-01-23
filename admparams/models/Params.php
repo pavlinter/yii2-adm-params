@@ -3,7 +3,6 @@
 namespace pavlinter\admparams\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%adm_params}}".
@@ -83,7 +82,7 @@ class Params extends \yii\db\ActiveRecord
         $key = self::className() . '-params';
         $params = Yii::$app->cache->get($key);
         if ($params === false) {
-            $params = ArrayHelper::map(self::find()->asArray()->all(), 'name', 'value');
+            $params = \yii\helpers\ArrayHelper::map(self::find()->asArray()->all(), 'name', 'value');
             $query = new \yii\db\Query();
             $sql = $query->select('COUNT(*),MAX(updated_at)')
                 ->from(self::tableName())
