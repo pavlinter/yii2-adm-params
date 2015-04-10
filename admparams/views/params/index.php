@@ -33,6 +33,9 @@ Yii::$app->i18n->resetDot();
             [
                 'attribute' => 'value',
                 'vAlign' => 'middle',
+                'value' => function ($model) {
+                    return \yii\helpers\StringHelper::truncate($model->value, 70);
+                },
             ],
             [
                 'attribute' => 'description',
@@ -44,10 +47,21 @@ Yii::$app->i18n->resetDot();
             ],
 
             [
-                'class' => '\kartik\grid\ActionColumn',
+                'class' => 'kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'options' => [
                     'style' => 'width:70px;',
+                ],
+                'buttons' => [
+                    'update' => function ($url, $model, $key) {
+                        if ($model->isSerialized()) {
+                            return null;
+                        }
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                            'title' => Yii::t('yii', 'Update'),
+                            'data-pjax' => '0',
+                        ]);
+                    },
                 ],
             ],
         ],

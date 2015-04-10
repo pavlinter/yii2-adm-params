@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package yii2-adm-params
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.1
+ */
+
 namespace pavlinter\admparams\models;
 
 use Yii;
@@ -11,7 +18,6 @@ use yii\data\ActiveDataProvider;
  */
 class ParamsSearch extends Params
 {
-
     /**
      * @inheritdoc
      */
