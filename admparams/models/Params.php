@@ -146,12 +146,7 @@ class Params extends \yii\db\ActiveRecord
             $value = serialize($value);
         }
         $model->value = $value;
-        if($model->save()){
-            return true;
-        } else {
-            \yii\helpers\VarDumper::dump($model->getFirstErrors(), 10, true);
-        }
-        return false;
+        return $model->save();
     }
 
     /**
