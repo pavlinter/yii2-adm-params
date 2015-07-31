@@ -86,14 +86,14 @@ class Params extends \yii\db\ActiveRecord
      */
     public static function bootstrap()
     {
-        $key = self::className() . '-params';
+        $key = static::className() . '-params';
         $params = Yii::$app->cache->get($key);
         if ($params === false) {
-            $params = \yii\helpers\ArrayHelper::map(self::find()->asArray()->all(), 'name', 'value');
+            $params = \yii\helpers\ArrayHelper::map(static::find()->asArray()->all(), 'name', 'value');
             $query = new \yii\db\Query();
             $sql = $query->select('COUNT(*),MAX(updated_at)')
-                ->from(self::tableName())
-                ->createCommand()
+                ->from(static::tableName())
+                ->createCommand(static::getDb())
                 ->getRawSql();
 
             foreach ($params as $name => $value) {
