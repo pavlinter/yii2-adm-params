@@ -4,7 +4,7 @@
  * @package yii2-adm-params
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.0.1
+ * @version 1.1.0
  */
 
 namespace pavlinter\admparams\models;
@@ -86,6 +86,7 @@ class Params extends \yii\db\ActiveRecord
      */
     public static function bootstrap()
     {
+        static::addDefaultParams();
         $key = static::className() . '-params';
         $params = Yii::$app->cache->get($key);
         if ($params === false) {
@@ -108,6 +109,33 @@ class Params extends \yii\db\ActiveRecord
         return $params;
     }
 
+    /**
+     * @throws \yii\base\ExitException
+     * @throws \yii\db\Exception
+     */
+    public static function addDefaultParams() {
+        if (Yii::$app->request->post('admparams-load-params')) {
+            if (Yii::$app->user->can('AdmRoot')) {
+                $params = \yii\helpers\ArrayHelper::map(self::find()->asArray()->all(), 'name', 'value');
+                $data = [];
+                foreach (Yii::$app->params as $name => $value) {
+                    if (!isset($params[$name])) {
+                        if (in_array(gettype($value), ['integer', 'double', 'string'])) {
+                            $data[] = [
+                                $name,
+                                $value,
+                                new \yii\db\Expression('NOW()')
+                            ];
+                        }
+                    }
+                }
+                if ($data) {
+                    Yii::$app->db->createCommand()->batchInsert(static::tableName(), ['name', 'value', 'updated_at'], $data)->execute();
+                }
+                Yii::$app->end(0, \pavlinter\adm\Adm::goBack(['']));
+            }
+        }
+    }
     /**
      * @return bool
      */

@@ -19,6 +19,7 @@ Yii::$app->i18n->resetDot();
 
     <p>
         <?= Html::a(Adm::t('admparams', 'Create Params'), ['create'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Adm::t('admparams', 'Add Default Params'), [''], ['class' => 'btn btn-success pull-right', 'data' => ['method' => 'post', 'params' => ['admparams-load-params' => '1']]]) ?>
     </p>
 
     <?= Adm::widget('GridView',[
