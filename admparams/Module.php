@@ -4,7 +4,7 @@
  * @package yii2-adm-params
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.1.0
+ * @version 1.1.1
  */
 
 namespace pavlinter\admparams;
@@ -54,6 +54,7 @@ class Module extends \yii\base\Module implements AdmBootstrapInterface
     {
         if ($adm->user->can('AdmRoot')) {
             $adm->params['left-menu']['settings']['items'][] = [
+                'key' => 'params',
                 'label' => '<span>' . $adm::t('menu', 'Params') . '</span>',
                 'url' => ['/admparams/params/index']
             ];

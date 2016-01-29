@@ -4,7 +4,7 @@
  * @package yii2-adm-params
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.1.0
+ * @version 1.1.1
  */
 
 namespace pavlinter\admparams\models;
@@ -185,4 +185,104 @@ class Params extends \yii\db\ActiveRecord
     {
         return static::deleteAll(['name' => $name]);
     }
+
+    /**
+     * if (Params::hasParams('users.user-1.name')) {
+     *
+     * }
+     * if (Params::hasParams('users.user-1', 'array')) {
+     *
+     * }
+     *
+     * @param $key
+     * @param null|\Closure $type
+     * @param null $data
+     * @return bool
+     */
+    public static function hasParams($key, $type = null, $data = null)
+    {
+        if ($data === null) {
+            $data = Yii::$app->params;
+        }
+        $params = static::getParams($data, $key, null, true);
+        if ($type === null) {
+            return $params !== null;
+        }
+
+        if ($type instanceof \Closure) {
+            return call_user_func($type, $params, $data, $key);
+        }
+        return gettype($params) !== $type;
+
+    }
+
+    /**
+     * @param $data
+     * @param $key
+     * @param null $default
+     * @param bool $strictArr
+     * @return null
+     */
+    public static function getParams($data, $key, $default = null, $strictArr = false)
+    {
+        if(!is_array($data)){
+            return $default;
+        }
+        $keys = explode('.', $key);
+
+        foreach ($keys as $v) {
+            array_shift($keys);
+            if(isset($data[$v])){
+                if(is_array($data[$v])){
+                    if(sizeof($keys)){
+                        return static::getNested($data[$v], $keys, $default, $strictArr);
+                    }
+                    if($strictArr){
+                        return $data[$v];
+                    }
+                    return $default;
+                } else {
+                    return $data[$v];
+                }
+            }
+        }
+        return $default;
+    }
+    /**
+     * @param $data
+     * @param $name
+     * @param null $default
+     * @param bool $strictArr
+     * @return null
+     */
+    public static function getNested($data, $name, $default = null, $strictArr = false)
+    {
+        if(!is_array($data)){
+            return $default;
+        }
+        if(is_array($name)){
+            $keys = $name;
+        } else {
+            $keys = explode('.', $name);
+        }
+        foreach ($keys as $key) {
+            array_shift($keys);
+            if(isset($data[$key])){
+                if(is_array($data[$key])){
+                    if(sizeof($keys)){
+                        return static::getNested($data[$key], $keys, $default, $strictArr);
+                    }
+                    if($strictArr){
+                        return $data[$key];
+                    }
+                    return $default;
+                } else {
+                    return $data[$key];
+                }
+            }
+        }
+        return $default;
+    }
+
+
 }

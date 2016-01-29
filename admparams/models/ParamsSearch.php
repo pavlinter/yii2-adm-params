@@ -4,7 +4,7 @@
  * @package yii2-adm-params
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.1.0
+ * @version 1.1.1
  */
 
 namespace pavlinter\admparams\models;
@@ -46,7 +46,7 @@ class ParamsSearch extends Params
      */
     public function search($params)
     {
-        $query = self::find();
+        $query = static::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
