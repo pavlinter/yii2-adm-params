@@ -119,7 +119,7 @@ class Params extends \yii\db\ActiveRecord
                 $params = \yii\helpers\ArrayHelper::map(self::find()->asArray()->all(), 'name', 'value');
                 $data = [];
                 foreach (Yii::$app->params as $name => $value) {
-                    if (!isset($params[$name])) {
+                    if (!isset($params[$name]) && strpos($name, '_') !== 0) {
                         if (in_array(gettype($value), ['integer', 'double', 'string'])) {
                             $data[] = [
                                 $name,
