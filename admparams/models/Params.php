@@ -173,7 +173,7 @@ class Params extends \yii\db\ActiveRecord
         if (is_array($value) || is_object($value)) {
             $value = serialize($value);
         }
-        $model->value = $value;
+        $model->value = (string)$value;
         return $model->save();
     }
 
