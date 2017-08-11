@@ -4,7 +4,7 @@
  * @package yii2-adm-params
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.1.3
+ * @version 1.1.4
  */
 
 namespace pavlinter\admparams\controllers;
