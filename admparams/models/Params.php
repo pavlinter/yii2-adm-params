@@ -31,7 +31,8 @@ class Params extends \yii\db\ActiveRecord
 				'class' => \yii\behaviors\TimestampBehavior::className(),
 				'updatedAtAttribute' => 'updated_at',
 				'attributes' => [
-					\yii\db\BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at']
+					\yii\db\BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    \yii\db\BaseActiveRecord::EVENT_BEFORE_INSERT => ['updated_at']
 				], 
 				'value' => new \yii\db\Expression('NOW()')
 			],
